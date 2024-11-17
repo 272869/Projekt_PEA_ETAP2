@@ -1,0 +1,25 @@
+# ninja log v5
+13	266	7535550492829404	CMakeFiles/Projekt_etap2.dir/Utils/Matrix.cpp.obj	c6013f70d56af75a
+30	316	7524572711607144	CMakeFiles/Projekt_etap2.dir/Utils/FileReader.cpp.obj	f79bf1fa7bd039e3
+4	274	7535589769954165	CMakeFiles/Projekt_etap2.dir/main.cpp.obj	3beed516c833d572
+9	290	7535589770134424	CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj	86e307f5753aa0f
+290	352	7535589770732996	Projekt_etap2.exe	f0585700bca13f90
+2	237	7535591134924659	build.ninja	f58d2d744027faad
+10	88	7533101316937343	CMakeFiles/Projekt_etap2.dir/Utils/MyStack.cpp.obj	1c9f92de367f53d7
+15	54	7535605104826306	CMakeFiles/Projekt_etap2.dir/Algorithms/BFS.cpp.obj	ee62be58cbca904c
+12	299	7535605107295661	CMakeFiles/Projekt_etap2.dir/Utils/Matrix.cpp.obj	c6013f70d56af75a
+3	257	7535605864622987	CMakeFiles/Projekt_etap2.dir/main.cpp.obj	3beed516c833d572
+6	280	7535605864898222	CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj	86e307f5753aa0f
+280	345	7535605865518557	Projekt_etap2.exe	e3cb52d27305073e
+4	240	7535607724836674	CMakeFiles/Projekt_etap2.dir/main.cpp.obj	3beed516c833d572
+241	302	7535607725411843	Projekt_etap2.exe	e3cb52d27305073e
+4	281	7535645935550875	CMakeFiles/Projekt_etap2.dir/main.cpp.obj	3beed516c833d572
+12	285	7535645935607993	CMakeFiles/Projekt_etap2.dir/Utils/Matrix.cpp.obj	c6013f70d56af75a
+8	301	7535645935791321	CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj	86e307f5753aa0f
+301	364	7535645936379525	Projekt_etap2.exe	e3cb52d27305073e
+4	264	7535647086812707	CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj	86e307f5753aa0f
+264	327	7535647087419420	Projekt_etap2.exe	e3cb52d27305073e
+4	320	7535647855668249	CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj	86e307f5753aa0f
+321	399	7535647856434444	Projekt_etap2.exe	e3cb52d27305073e
+4	263	7535648272367799	CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj	86e307f5753aa0f
+263	336	7535648273031335	Projekt_etap2.exe	e3cb52d27305073e
