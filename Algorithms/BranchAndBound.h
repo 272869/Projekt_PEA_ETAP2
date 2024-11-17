@@ -19,7 +19,7 @@ public:
 
     void branchAndBoundAlgorithm();
     int **getMatrix() const;
-
+    void printMatrixWages();
 private:
     int **matrix = nullptr;
     Matrix *matrixWeights;

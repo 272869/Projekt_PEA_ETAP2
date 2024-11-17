@@ -8,9 +8,10 @@ int main() {
     //std::cout << "elo2" << std::endl;
     if (branchAndBound->getMatrix() != nullptr)
         std::cout << "elo3" << std::endl;
+        branchAndBound->printMatrixWages();
         branchAndBound->branchAndBoundAlgorithm();
     std::cout << "elo4" << std::endl;
-    delete branchAndBound;
+    //delete branchAndBound;
     //std::cout << "elo5" << std::endl;
     return 0;
 }

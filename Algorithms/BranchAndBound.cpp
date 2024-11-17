@@ -68,7 +68,7 @@ void BranchAndBound::solveLevel() {
         priorityQueue.pop();
         int vertexTop = nodeTop->vertex;
 
-        if (nodeTop->level == matrixWeights->getSize() - 1) {
+        if (nodeTop->level == matrixWeights->getSize()-1) {
             showPath(nodeTop->path, nodeTop->pathSize);
             break;
         }
@@ -83,13 +83,15 @@ void BranchAndBound::solveLevel() {
                 child->cost += nodeTop->cost;
                 calculateCost(child->matrixReduced, child);
                 priorityQueue.push(child);
+                showPath(nodeTop->path, nodeTop->pathSize);
+                printf("%d %d\n", nodeTop->cost, nodeTop->level + 1);
             }
         }
-        delete nodeTop;
     }
     if (nodeTop) {
         std::cout << "Final cost: " << nodeTop->cost << "\n";
     }
+    //delete nodeTop;
 }
 
 
@@ -97,13 +99,18 @@ void BranchAndBound::showPath(int* path, int pathSize) {
     for (int i = 0; i < pathSize; ++i) {
         std::cout << path[i] << "->";
     }
-    std::cout << 0 << "\n"; // Assuming the path is circular and ends at vertex 0
+    std::cout << path[0] << "\n";  // Dodanie 0 na końcu, aby zamknąć cykl
 }
 
 
 int **BranchAndBound::getMatrix() const {
     return matrix;
 }
+
+void BranchAndBound::printMatrixWages() {
+    matrixWeights->showMatrixWages();
+}
+
 
 
 

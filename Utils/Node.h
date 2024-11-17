@@ -34,12 +34,17 @@ public:
 
     // Copy the path from the parent node and add the current vertex to it
     void copyPath(int* p, int size) {
+        if (size > pathSize) {
+            delete[] path;
+            path = new int[size];  // Re-allocate memory
+        }
         for (int i = 0; i < size; i++) {
             this->path[i] = p[i];  // Copy existing path
         }
         this->path[size] = vertex;  // Add the current vertex
         pathSize = size + 1;  // Update path size
     }
+
 
     ~Node() {
         delete[] path;

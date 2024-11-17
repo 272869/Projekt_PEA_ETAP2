@@ -40,8 +40,12 @@ public:
     }
 
     ~PriorityQueue() {
+        for (int i = 0; i < size; ++i) {
+            delete heap[i];
+        }
         delete[] heap;
     }
+
 
     bool empty() const {
         return size == 0;
@@ -49,12 +53,21 @@ public:
 
     void push(Node* node) {
         if (size == capacity) {
-            std::cerr << "PriorityQueue capacity exceeded!" << std::endl;
-            return;
+            expandCapacity();
         }
         heap[size] = node;
         heapifyUp(size);
         size++;
+    }
+
+    void expandCapacity() {
+        capacity *= 2;
+        Node** newHeap = new Node*[capacity];
+        for (int i = 0; i < size; ++i) {
+            newHeap[i] = heap[i];
+        }
+        delete[] heap;
+        heap = newHeap;
     }
 
     Node* top() const {
