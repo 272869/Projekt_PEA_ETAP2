@@ -1,17 +1,25 @@
-
-#include <fstream>
+#pragma once
+#ifndef FILEREADER_H
+#define FILEREADER_H
+#include <iostream>
+#include <string>
+using namespace std;
 
 class FileReader{
 public:
-    bool openFile();
-    static int** readFile(const std::string& path, int& size);
-    int getDataFromFile();
-
-    ~FileReader() {
-        file.close();
+    int** tab;
+    int size;
+    FileReader() {
+        this->size = 0;
+        tab = NULL;
     }
-private:
-
-    std::fstream file;
+    int** loadFromFile(std::string path);
+    int** loadRandomData(int N, int sand);
+    void alocate(int N);
+    void dealocate();
+    void showTab();
+    void ordertable(int randtab[], int number);
+    void randomshuttle(int randtab[], int number, int testnumber, int lpoj);
 };
 
+#endif // !FILEREADER_H

@@ -6,16 +6,11 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(Projekt_etap2 main.cpp
         Algorithms/BranchAndBound.h
         Algorithms/BranchAndBound.cpp
-        Utils/Matrix.h
-        Utils/Matrix.cpp
         Utils/FileReader.h
         Utils/FileReader.cpp
-        Utils/PriorityQueue.h
-        Utils/FIFOQueue.h
         Algorithms/BFS.h
         Algorithms/BFS.cpp
-        Utils/Node.h
-        Utils/Result.h
-        Algorithms/BoundCalculator.h
-        Algorithms/BoundCalculator.cpp
+        Algorithms/DFS.h
+        Algorithms/DFS.cpp
+        Utils/Stack.h
 )

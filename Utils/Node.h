@@ -1,15 +1,17 @@
-#ifndef NODE_H
-#define NODE_H
+//
+// Created by pitko on 18.11.2024.
+//
 
+#ifndef PROJEKT_ETAP2_NODE_H
+#define PROJEKT_ETAP2_NODE_H
 struct Node {
-
     int* path;   // Dynamiczna tablica reprezentująca ścieżkę (odwiedzone miasta)
     int cost;    // Koszt bieżącej ścieżki
     int level;   // Poziom w drzewie, ile miast zostało odwiedzonych
     int bound;   // Dolne ograniczenie kosztu
 
     // Konstruktor
-    explicit Node(int N) : cost(0), level(0), bound(0) {
+    Node(int N) : cost(0), level(0), bound(0) {
         path = new int[N];
         for (int i = 0; i < N; i++) {
             path[i] = -1;  // Inicjalizujemy wszystkie elementy, np. na -1
@@ -32,5 +34,4 @@ struct Node {
         path = nullptr;  // Ustawienie wskaźnika na nullptr, aby uniknąć podwójnego zwalniania
     }
 };
-
-#endif
+#endif //PROJEKT_ETAP2_NODE_H

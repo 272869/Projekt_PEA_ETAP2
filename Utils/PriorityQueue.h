@@ -1,98 +1,64 @@
+//
+// Created by pitko on 18.11.2024.
+//
 
-struct PriorityQueue {
+#ifndef PROJEKT_ETAP2_PRIORITYQUEUE_H
+#define PROJEKT_ETAP2_PRIORITYQUEUE_H
 
-    Node** heap;   // Tablica dynamiczna przechowująca węzły
-    int size;      // Bieżący rozmiar kolejki
-    int capacity;  // Pojemność kolejki
+#include <iostream>
+#include "Node.h"
+using namespace std;
 
-    // Inicjalizacja kolejki priorytetowej
-    PriorityQueue(int cap) {
-        capacity = cap;
-        size = 0;
-        heap = new Node*[capacity];
+struct Queue {
+    Node** nodes;  // Dynamiczna tablica wskaźników na węzły
+    int front, rear, size;
+
+    // Inicjalizacja kolejki
+    void init(int maxSize) {
+        nodes = new Node*[maxSize];  // Dynamiczna alokacja dla tablicy wskaźników
+        front = 0;
+        rear = 0;
+        size = maxSize;
     }
-
-    // Destruktor kolejki priorytetowej
-    ~PriorityQueue() {
-        for (int i = 0; i < size; i++) {
-            delete heap[i];
-        }
-        delete[] heap;
+    // Sprawdzenie, czy kolejka jest pusta
+    bool isEmpty() {
+        return front == rear;
     }
-
-    // Dodawanie elementu do kolejki priorytetowej
+    // Dodanie elementu do kolejki
     void enqueue(Node* node) {
-        if (size == capacity) {
-            resize(); // Zwiększamy rozmiar, gdy kolejka jest pełna
+        if (rear >= size) {
+            // Jeśli kolejka jest pełna, możesz rozważyć zwiększenie jej rozmiaru
+            // Przykładowe powiększenie o 2 razy
+            resize(size * 2);
         }
-
-        heap[size] = node;
-        int index = size;
-        size++;
-
-        heapifyUp(index);
+        nodes[rear++] = node;
     }
-
-    // Usuwanie elementu (o najmniejszym koszcie) z kolejki
+    // Pobranie elementu z kolejki
     Node* dequeue() {
-        if (isEmpty()) {
-            return nullptr;
-        }
-
-        Node* minNode = heap[0];
-        heap[0] = heap[size - 1];
-        size--;
-        heapifyDown(0);
-
-        return minNode;
+        return nodes[front++];
     }
-
-    // Sprawdzanie, czy kolejka jest pusta
-    bool isEmpty() const {
-        return size == 0;
-    }
-
-    // Funkcja powiększająca tablicę heap, gdy jest pełna
-    void resize() {
-        capacity *= 2; // Podwajamy pojemność
-        Node** newHeap = new Node*[capacity];
-
+    // Zwiększenie rozmiaru kolejki
+    void resize(int newSize) {
+        Node** newNodes = new Node*[newSize];
+        int i = 0;
         // Kopiujemy elementy do nowej tablicy
-        for (int i = 0; i < size; i++) {
-            newHeap[i] = heap[i];
+        for (int j = front; j < rear; j++) {
+            newNodes[i++] = nodes[j];
         }
-
-        delete[] heap; // Zwolnienie starej tablicy
-        heap = newHeap; // Przypisanie nowej tablicy
+        delete[] nodes;  // Zwalniamy starą tablicę
+        nodes = newNodes; // Przypisujemy nową tablicę
+        front = 0;
+        rear = i;
+        size = newSize;
     }
-
-private:
-    // Utrzymywanie porządku w kopcu przy dodawaniu elementu
-    void heapifyUp(int index) {
-        int parentIndex = (index - 1) / 2;
-        while (index > 0 && (heap[index]->cost + heap[index]->bound) < (heap[parentIndex]->cost + heap[parentIndex]->bound)) {
-            std::swap(heap[index], heap[parentIndex]);
-            index = parentIndex;
-            parentIndex = (index - 1) / 2;
+    // Destruktor
+    ~Queue() {
+        for (int i = front; i < rear; i++) {
+            if (nodes[i] != nullptr) {
+                delete nodes[i];  // Zwalniamy każdy węzeł tylko, jeśli nie jest nullptr
+            }
         }
-    }
-
-    // Utrzymywanie porządku w kopcu przy usuwaniu elementu
-    void heapifyDown(int index) {
-        int leftChild = 2 * index + 1;
-        int rightChild = 2 * index + 2;
-        int smallest = index;
-
-        if (leftChild < size && (heap[leftChild]->cost + heap[leftChild]->bound) < (heap[smallest]->cost + heap[smallest]->bound)) {
-            smallest = leftChild;
-        }
-        if (rightChild < size && (heap[rightChild]->cost + heap[rightChild]->bound) < (heap[smallest]->cost + heap[smallest]->bound)) {
-            smallest = rightChild;
-        }
-
-        if (smallest != index) {
-            std::swap(heap[index], heap[smallest]);
-            heapifyDown(smallest);
-        }
+        delete[] nodes;  // Zwalniamy tablicę wskaźników
     }
 };
+#endif //PROJEKT_ETAP2_PRIORITYQUEUE_H

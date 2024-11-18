@@ -61,12 +61,6 @@ build CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj: CXX_COMPIL
   OBJECT_DIR = CMakeFiles\Projekt_etap2.dir
   OBJECT_FILE_DIR = CMakeFiles\Projekt_etap2.dir\Algorithms
 
-build CMakeFiles/Projekt_etap2.dir/Utils/Matrix.cpp.obj: CXX_COMPILER__Projekt_etap2_unscanned_Debug C$:/Users/pitko/Desktop/Studia/PEA/Projekt_etap2/Utils/Matrix.cpp || cmake_object_order_depends_target_Projekt_etap2
-  DEP_FILE = CMakeFiles\Projekt_etap2.dir\Utils\Matrix.cpp.obj.d
-  FLAGS = -g -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\Projekt_etap2.dir
-  OBJECT_FILE_DIR = CMakeFiles\Projekt_etap2.dir\Utils
-
 build CMakeFiles/Projekt_etap2.dir/Utils/FileReader.cpp.obj: CXX_COMPILER__Projekt_etap2_unscanned_Debug C$:/Users/pitko/Desktop/Studia/PEA/Projekt_etap2/Utils/FileReader.cpp || cmake_object_order_depends_target_Projekt_etap2
   DEP_FILE = CMakeFiles\Projekt_etap2.dir\Utils\FileReader.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
@@ -79,8 +73,8 @@ build CMakeFiles/Projekt_etap2.dir/Algorithms/BFS.cpp.obj: CXX_COMPILER__Projekt
   OBJECT_DIR = CMakeFiles\Projekt_etap2.dir
   OBJECT_FILE_DIR = CMakeFiles\Projekt_etap2.dir\Algorithms
 
-build CMakeFiles/Projekt_etap2.dir/Algorithms/BoundCalculator.cpp.obj: CXX_COMPILER__Projekt_etap2_unscanned_Debug C$:/Users/pitko/Desktop/Studia/PEA/Projekt_etap2/Algorithms/BoundCalculator.cpp || cmake_object_order_depends_target_Projekt_etap2
-  DEP_FILE = CMakeFiles\Projekt_etap2.dir\Algorithms\BoundCalculator.cpp.obj.d
+build CMakeFiles/Projekt_etap2.dir/Algorithms/DFS.cpp.obj: CXX_COMPILER__Projekt_etap2_unscanned_Debug C$:/Users/pitko/Desktop/Studia/PEA/Projekt_etap2/Algorithms/DFS.cpp || cmake_object_order_depends_target_Projekt_etap2
+  DEP_FILE = CMakeFiles\Projekt_etap2.dir\Algorithms\DFS.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\Projekt_etap2.dir
   OBJECT_FILE_DIR = CMakeFiles\Projekt_etap2.dir\Algorithms
@@ -93,7 +87,7 @@ build CMakeFiles/Projekt_etap2.dir/Algorithms/BoundCalculator.cpp.obj: CXX_COMPI
 #############################################
 # Link the executable Projekt_etap2.exe
 
-build Projekt_etap2.exe: CXX_EXECUTABLE_LINKER__Projekt_etap2_Debug CMakeFiles/Projekt_etap2.dir/main.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj CMakeFiles/Projekt_etap2.dir/Utils/Matrix.cpp.obj CMakeFiles/Projekt_etap2.dir/Utils/FileReader.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/BFS.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/BoundCalculator.cpp.obj
+build Projekt_etap2.exe: CXX_EXECUTABLE_LINKER__Projekt_etap2_Debug CMakeFiles/Projekt_etap2.dir/main.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj CMakeFiles/Projekt_etap2.dir/Utils/FileReader.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/BFS.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/DFS.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Projekt_etap2.dir
