@@ -14,4 +14,8 @@ add_executable(Projekt_etap2 main.cpp
         Utils/FIFOQueue.h
         Algorithms/BFS.h
         Algorithms/BFS.cpp
+        Utils/Node.h
+        Utils/Result.h
+        Algorithms/BoundCalculator.h
+        Algorithms/BoundCalculator.cpp
 )

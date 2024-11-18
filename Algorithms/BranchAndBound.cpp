@@ -1,114 +1,158 @@
+#include <vector>
 #include <iostream>
 #include "BranchAndBound.h"
+#include "../Utils/PriorityQueue.h"
 
 
-void BranchAndBound::reduceRow(int **matrixReduced, Node *node) {
-    for (int i = 0; i < matrixWeights->getSize(); i++) {
-        int min = INT_MAX;
-        for (int j = 0; j < matrixWeights->getSize(); j++)
-            min = std::min(matrixReduced[i][j], min);
-        if (min != INT_MAX && min != 0) {
-            node->cost += min;
-            for (int j = 0; j < matrixWeights->getSize(); j++) {
-                if (matrixReduced[i][j] != INT_MAX)
-                    matrixReduced[i][j] -= min;
+int BranchAndBound::calculateBound(Node *node, int **dist, int N) {
+    int bound = node->cost;
+    bool* visited = new bool[N];  // Alokujemy dynamicznie tablicę odwiedzin
+    for (int i = 0; i < N; i++) visited[i] = false;
+
+    // Oznacz miasta już odwiedzone
+    for (int i = 0; i <= node->level; i++) {
+        visited[node->path[i]] = true;
+    }
+
+    // Dodaj minimalny koszt krawędzi wychodzących z nieodwiedzonych miast
+    for (int i = 0; i < N; i++) {
+        if (!visited[i]) {
+            int min_cost = INT_MAX;
+            for (int j = 0; j < N; j++) {
+                if (i != j && !visited[j]) {
+                    min_cost = std::min(min_cost, dist[i][j]);
+                }
+            }
+            if(min_cost == INT_MAX){
+                min_cost = 0;
+            }
+            bound += min_cost;
+        }
+    }
+
+    delete[] visited;  // Zwalniamy pamięć tablicy odwiedzin
+    return bound;
+}
+
+Result BranchAndBound::branchAndBound(int** dist, int N, int start) {
+    PriorityQueue pq(1000);
+
+    bestCost = INT_MAX;
+    bestNode = nullptr;
+
+    Node* root = new Node(N);
+    root->path[0] = start;
+    root->cost = 0;
+    root->level = 0;
+    root->bound = calculateBound(root, dist, N);
+
+    pq.enqueue(root);
+
+    while (!pq.isEmpty()) {
+        Node* current = pq.dequeue();
+
+        if (current->level == N - 1) {
+            int last_to_start = dist[current->path[current->level]][start];
+            int total_cost = current->cost + last_to_start;
+
+            if (total_cost < bestCost) {
+                bestCost = total_cost;
+                if (bestNode != nullptr) {
+                    delete bestNode;
+                }
+                bestNode = current;
+            } else {
+                delete current;
+            }
+            continue;
+        }
+
+        for (int i = 0; i < N; i++) {
+            bool alreadyVisited = false;
+
+            for (int j = 0; j <= current->level; j++) {
+                if (current->path[j] == i) {
+                    alreadyVisited = true;
+                    break;
+                }
+            }
+
+            if (!alreadyVisited && current->level < N - 1) {
+                Node* child = new Node(N);
+                for (int j = 0; j <= current->level; j++) {
+                    child->path[j] = current->path[j];
+                }
+                child->level = current->level + 1;
+                child->path[child->level] = i;
+
+                child->cost = current->cost + dist[current->path[current->level]][i];
+                child->bound = calculateBound(child, dist, N);
+
+                if (child->bound < bestCost) {
+                    pq.enqueue(child);
+                } else {
+                    delete child;
+                }
             }
         }
+
+        delete current;
     }
-    reduceColumn(matrixReduced, node);
+
+    Result result;
+    result.cost = bestCost;
+
+    if (bestNode != nullptr) {
+        result.path = new int[N + 1];
+        for (int i = 0; i <= bestNode->level; i++) {
+            result.path[i] = bestNode->path[i];
+        }
+        result.path[bestNode->level + 1] = start;
+        delete bestNode;
+    } else {
+        result.path = nullptr;
+    }
+
+    return result;
 }
 
-void BranchAndBound::reduceColumn(int **matrixReduced, Node *node) {
-    for (int i = 0; i < matrixWeights->getSize(); i++) {
-        int min = INT_MAX;
-        for (int j = 0; j < matrixWeights->getSize(); j++)
-            min = std::min(matrixReduced[j][i], min);
-        if (min != INT_MAX && min != 0) {
-            node->cost += min;
-            for (int j = 0; j < matrixWeights->getSize(); j++) {
-                if (matrixReduced[j][i] != INT_MAX)
-                    matrixReduced[j][i] -= min;
+Result BranchAndBound::startFromEachVertex(int** dist, int N) {
+    Result bestResult;
+    bestResult.cost = INT_MAX;
+    bestResult.path = nullptr;
+
+    for (int start = 0; start < N; start++) {
+        Result currentResult = branchAndBound(dist, N, start);
+
+        if (currentResult.cost < bestResult.cost) {
+            if (bestResult.path != nullptr) {
+                delete[] bestResult.path;
             }
+            bestResult = currentResult;
+        } else {
+            delete[] currentResult.path;
         }
     }
-}
 
-void BranchAndBound::calculateCost(int **matrixReduced, Node *node) {
-    reduceRow(matrixReduced, node);
-}
-
-void BranchAndBound::makeInfinity(Node *parent, Node *child) {
-    child->copyMatrix(parent->matrixReduced);
-    child->cost += child->matrixReduced[parent->vertex][child->vertex];
-    child->matrixReduced[child->vertex][parent->vertex] = INT_MAX;
-    std::fill_n(child->matrixReduced[parent->vertex], matrixWeights->getSize(), INT_MAX);
-    for (int i = 0; i < matrixWeights->getSize(); i++) {
-        child->matrixReduced[i][child->vertex] = INT_MAX;
-    }
-}
-
-void BranchAndBound::branchAndBoundAlgorithm() {
-    Node *node0 = new Node(0, matrixWeights->getSize());
-    node0->copyMatrix(matrix);
-    calculateCost(node0->matrixReduced, node0);
-    node0->path[0] = 0;  // Set the starting vertex
-    node0->pathSize = 1;  // Path size is now 1
-    node0->level = 0;
-    priorityQueue.push(node0);
-    solveLevel();
+    return bestResult;
 }
 
 
-void BranchAndBound::solveLevel() {
-    int cost = INT_MAX;
-    Node *nodeTop = nullptr;
+///wyświetlenie cyklu rozwiązania
+void BranchAndBound::showPath(const Result& result, int pathsize) {
+    if (result.path != nullptr) {
+        std::cout << "Najlepsza trasa: ";
 
-    while (!priorityQueue.empty()) {
-        nodeTop = priorityQueue.top();
-        priorityQueue.pop();
-        int vertexTop = nodeTop->vertex;
-
-        if (nodeTop->level == matrixWeights->getSize()-1) {
-            showPath(nodeTop->path, nodeTop->pathSize);
-            break;
+        // Używamy size do iterowania po ścieżce
+        for (int i = 0; i < pathsize; i++) {
+            std::cout << result.path[i] << " -> ";
         }
 
-        for (int j = 0; j < matrixWeights->getSize(); j++) {
-            if (nodeTop->matrixReduced[vertexTop][j] != INT_MAX) {
-                Node *child = new Node(j, matrixWeights->getSize());
-                child->copyPath(nodeTop->path, nodeTop->pathSize);
-                child->copyMatrix(nodeTop->matrixReduced);
-                makeInfinity(nodeTop, child);
-                child->level = nodeTop->level + 1;
-                child->cost += nodeTop->cost;
-                calculateCost(child->matrixReduced, child);
-                priorityQueue.push(child);
-                showPath(nodeTop->path, nodeTop->pathSize);
-                printf("%d %d\n", nodeTop->cost, nodeTop->level + 1);
-            }
-        }
+        std::cout << result.path[0] << std::endl; // Powrót do miasta startowego
+        std::cout << "Minimalny koszt: " << result.cost << std::endl;
+    } else {
+        std::cout << "Brak znalezionego rozwiązania." << std::endl;
     }
-    if (nodeTop) {
-        std::cout << "Final cost: " << nodeTop->cost << "\n";
-    }
-    //delete nodeTop;
-}
-
-
-void BranchAndBound::showPath(int* path, int pathSize) {
-    for (int i = 0; i < pathSize; ++i) {
-        std::cout << path[i] << "->";
-    }
-    std::cout << path[0] << "\n";  // Dodanie 0 na końcu, aby zamknąć cykl
-}
-
-
-int **BranchAndBound::getMatrix() const {
-    return matrix;
-}
-
-void BranchAndBound::printMatrixWages() {
-    matrixWeights->showMatrixWages();
 }
 
 

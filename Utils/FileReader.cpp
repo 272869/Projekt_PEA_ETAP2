@@ -24,3 +24,24 @@ int FileReader::getDataFromFile() {
     file >> number;
     return number;
 }
+
+int** FileReader::readFile(const std::string& path, int& size) {
+    std::ifstream file(path);  // Otwiera plik do odczytu
+    if (!file) {
+        throw std::runtime_error("Nie można otworzyć pliku: " + path);
+    }
+
+    file >> size;  // Odczytuje rozmiar macierzy
+    int** matrix = new int*[size];
+    for (int i = 0; i < size; i++) {
+        matrix[i] = new int[size];
+    }
+
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            file >> matrix[i][j];  // Odczyt wartości do macierzy
+        }
+    }
+
+    return matrix;
+}

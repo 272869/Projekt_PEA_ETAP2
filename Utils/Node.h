@@ -1,56 +1,36 @@
-#include <iostream>
+#ifndef NODE_H
+#define NODE_H
 
+struct Node {
 
-class Node {
-private:
-    int numberOfVertexes;
-public:
-    int* path;  // Use a dynamic array instead of std::vector
-    int pathSize;  // To track the size of the path array
-    int level;
-    int **matrixReduced;
-    long long cost = 0;
-    int vertex;
+    int* path;   // Dynamiczna tablica reprezentująca ścieżkę (odwiedzone miasta)
+    int cost;    // Koszt bieżącej ścieżki
+    int level;   // Poziom w drzewie, ile miast zostało odwiedzonych
+    int bound;   // Dolne ograniczenie kosztu
 
-    Node(int vertex, int numberOfVertexes) {
-        this->vertex = vertex;
-        this->numberOfVertexes = numberOfVertexes;
-        pathSize = 0;
-        path = new int[numberOfVertexes];
-        matrixReduced = new int *[numberOfVertexes];
-        for (int i = 0; i < numberOfVertexes; i++) {
-            matrixReduced[i] = new int[numberOfVertexes];
+    // Konstruktor
+    explicit Node(int N) : cost(0), level(0), bound(0) {
+        path = new int[N];
+        for (int i = 0; i < N; i++) {
+            path[i] = -1;  // Inicjalizujemy wszystkie elementy, np. na -1
         }
     }
 
-    // Copy matrix from another matrix
-    void copyMatrix(int **m) const {
-        for (int i = 0; i < numberOfVertexes; i++) {
-            for (int j = 0; j < numberOfVertexes; ++j) {
-                this->matrixReduced[i][j] = m[i][j];
-            }
+    // Konstruktor kopiujący
+    Node(const Node& other, int N) : cost(other.cost), level(other.level), bound(other.bound) {
+        path = new int[N];
+        for (int i = 0; i < N; i++) {
+            path[i] = other.path[i];  // Kopiujemy wartości ze źródła
         }
     }
 
-    // Copy the path from the parent node and add the current vertex to it
-    void copyPath(int* p, int size) {
-        if (size > pathSize) {
-            delete[] path;
-            path = new int[size];  // Re-allocate memory
-        }
-        for (int i = 0; i < size; i++) {
-            this->path[i] = p[i];  // Copy existing path
-        }
-        this->path[size] = vertex;  // Add the current vertex
-        pathSize = size + 1;  // Update path size
-    }
 
-
+    // Destruktor
     ~Node() {
+//        std::cout << "Destruktor dla Node o adresie " << this << std::endl;
         delete[] path;
-        for (int i = 0; i < numberOfVertexes; i++) {
-            delete[] matrixReduced[i];
-        }
-        delete[] matrixReduced;
+        path = nullptr;  // Ustawienie wskaźnika na nullptr, aby uniknąć podwójnego zwalniania
     }
 };
+
+#endif

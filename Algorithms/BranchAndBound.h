@@ -1,35 +1,20 @@
+
+#include <climits>
+#include "../Utils/Node.h"
 #include "../Utils/Matrix.h"
-#include "../Utils/PriorityQueue.h"
-#include "../Utils/FIFOQueue.h"
+#include "../Utils/Result.h"
+#include <queue>
 
 class BranchAndBound {
-
 public:
-    BranchAndBound() {
-        matrixWeights = new Matrix();
-        if (matrixWeights->getMatrixWeights() != nullptr)
-            matrix = matrixWeights->getMatrixWeights();
-    }
+    Result branchAndBound(int** dist, int N, int start);   // Główna metoda branch and bound z argumentem start
+    Result startFromEachVertex(int** dist, int N);          // Metoda wywołująca branch and bound dla każdego wierzchołka
+    static int  calculateBound(Node* node, int** dist, int N);
+    static void showPath(const Result& result, int size);
 
-    ~BranchAndBound() {
-        if (matrixWeights->getMatrixWeights() != nullptr)
-            matrixWeights->deleteMatrixTable(matrix);
-        delete matrixWeights;
-    }
-
-    void branchAndBoundAlgorithm();
-    int **getMatrix() const;
-    void printMatrixWages();
 private:
-    int **matrix = nullptr;
-    Matrix *matrixWeights;
-    PriorityQueue priorityQueue{1000}; // Max queue size assumption
-    FIFOQueue fifoQueue{1000}; // FIFO Queue for BFS
-    void calculateCost(int **matrixReduced, Node *node);
-    void reduceRow(int **matrixReduced, Node *node);
-    void reduceColumn(int **matrixReduced, Node *node);
-    void makeInfinity(Node *parent, Node *child);
-    static void showPath(int* path, int pathSize);
-    void solveLevel();  // Existing DFS level solver
+    int bestCost;
+    Node* bestNode;
 
 };
+
