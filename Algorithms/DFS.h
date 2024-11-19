@@ -34,7 +34,7 @@ public:
     ~DFS() {
         delete[] bestPath;
     }
-
+    void showTheShortestPath(int** costMatrix);
     // Funkcja uruchamiająca algorytm DFS
     int bnb_dfs_run(int** costMatrix);
 };

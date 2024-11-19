@@ -79,6 +79,12 @@ build CMakeFiles/Projekt_etap2.dir/Algorithms/DFS.cpp.obj: CXX_COMPILER__Projekt
   OBJECT_DIR = CMakeFiles\Projekt_etap2.dir
   OBJECT_FILE_DIR = CMakeFiles\Projekt_etap2.dir\Algorithms
 
+build CMakeFiles/Projekt_etap2.dir/Utils/ConfigFile.cpp.obj: CXX_COMPILER__Projekt_etap2_unscanned_Debug C$:/Users/pitko/Desktop/Studia/PEA/Projekt_etap2/Utils/ConfigFile.cpp || cmake_object_order_depends_target_Projekt_etap2
+  DEP_FILE = CMakeFiles\Projekt_etap2.dir\Utils\ConfigFile.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Projekt_etap2.dir
+  OBJECT_FILE_DIR = CMakeFiles\Projekt_etap2.dir\Utils
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Projekt_etap2
@@ -87,7 +93,7 @@ build CMakeFiles/Projekt_etap2.dir/Algorithms/DFS.cpp.obj: CXX_COMPILER__Projekt
 #############################################
 # Link the executable Projekt_etap2.exe
 
-build Projekt_etap2.exe: CXX_EXECUTABLE_LINKER__Projekt_etap2_Debug CMakeFiles/Projekt_etap2.dir/main.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj CMakeFiles/Projekt_etap2.dir/Utils/FileReader.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/BFS.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/DFS.cpp.obj
+build Projekt_etap2.exe: CXX_EXECUTABLE_LINKER__Projekt_etap2_Debug CMakeFiles/Projekt_etap2.dir/main.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj CMakeFiles/Projekt_etap2.dir/Utils/FileReader.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/BFS.cpp.obj CMakeFiles/Projekt_etap2.dir/Algorithms/DFS.cpp.obj CMakeFiles/Projekt_etap2.dir/Utils/ConfigFile.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Projekt_etap2.dir

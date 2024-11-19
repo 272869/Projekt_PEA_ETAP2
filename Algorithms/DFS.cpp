@@ -1,12 +1,8 @@
-//
-// Created by pitko on 18.11.2024.
-//
 
 #include <climits>
 #include <algorithm>
 #include <iostream>
 #include "DFS.h"
-
 
 int DFS::calculateCost(int* path, int** costMatrix, int pathSize) {
     int cost = 0;
@@ -20,16 +16,13 @@ int DFS::calculateCost(int* path, int** costMatrix, int pathSize) {
 int DFS::lowerBound(int* currentPath, int** distances, int currentPathSize) {
     if (currentPathSize == size) return -1;
     int value = 0;
-
     for (int i = 1; i < currentPathSize; i++) {
         value += distances[currentPath[i - 1]][currentPath[i]];
     }
-
     int* visited = new int[size]{0};
     for (int i = 0; i < currentPathSize; i++) {
         visited[currentPath[i]] = 1;
     }
-
     for (int i = 0; i < size; i++) {
         if (visited[i]) continue;
         int minCost = INT_MAX;
@@ -50,7 +43,6 @@ void DFS::dfs(Node* currentNode, int** costMatrix) {
         delete currentNode;
         return;
     }
-
     if (currentNode->level == size) {
         int currentCost = calculateCost(currentNode->path, costMatrix, size);
         if (currentCost < minCost) {
@@ -62,7 +54,6 @@ void DFS::dfs(Node* currentNode, int** costMatrix) {
         delete currentNode;
         return;
     }
-
     for (int i = 0; i < size; ++i) {
         bool visited = false;
         for (int j = 0; j < currentNode->level; ++j) {
@@ -72,7 +63,6 @@ void DFS::dfs(Node* currentNode, int** costMatrix) {
             }
         }
         if (visited) continue;
-
         Node* childNode = new Node(size);
         for (int j = 0; j < currentNode->level; ++j) {
             childNode->path[j] = currentNode->path[j];
@@ -80,13 +70,12 @@ void DFS::dfs(Node* currentNode, int** costMatrix) {
         childNode->path[currentNode->level] = i;
         childNode->level = currentNode->level + 1;
         childNode->cost = currentNode->cost +
-        costMatrix[currentNode->path[currentNode->level - 1]][i];
+                          costMatrix[currentNode->path[currentNode->level - 1]][i];
 
         childNode->bound = lowerBound(childNode->path, costMatrix, childNode->level);
 
         dfs(childNode, costMatrix); // Rekurencyjne wywołanie dla dziecka
     }
-
     delete currentNode;
 }
 
@@ -95,13 +84,19 @@ int DFS::bnb_dfs_run(int** costMatrix) {
     root->path[0] = 1;
     root->level = 1;
     root->bound = lowerBound(root->path, costMatrix, 1);
-
     dfs(root, costMatrix);
-
-    for (int i = 0; i < size; i++) {
-        std::cout << bestPath[i] << "->";
-    }
-    std::cout << 0 << "\n";
-
     return minCost;
+}
+
+// Wyświetlenie najkrótszej ścieżki i kosztu
+void DFS::showTheShortestPath(int** costMatrix) {
+    if (bestPath == nullptr) {
+        return;
+    }
+    for (int i = 0; i < size; i++) {
+        std::cout << bestPath[i] << " -> ";
+    }
+    std::cout << bestPath[0] << std::endl; // Powrót do punktu początkowego
+    int cost = calculateCost(bestPath, costMatrix, size);
+    std::cout << "Koszt: " << cost << std::endl;
 }

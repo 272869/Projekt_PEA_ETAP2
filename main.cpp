@@ -2,6 +2,7 @@
 #include "Utils/FileReader.h"
 #include "Algorithms/BFS.h"
 #include "Algorithms/DFS.h"
+#include "Algorithms/BranchAndBound.h"
 
 using namespace std;
 
@@ -18,11 +19,15 @@ void menu() {
         cout << "2. Wygeneruj dane losowe\n";
         cout << "3. Wyswietl dane\n";
         cout << "4. B&B\n";
+        cout << "5. BFS\n";
+        cout << "6. DFS\n";
         cout << "0. Zakoncz dzialanie\n";
         int choice = 0;
         int city_number = 0;
 
-        DFS* bnb = nullptr;
+        BranchAndBound* bnb = nullptr;
+        BFS* bfs = nullptr;
+        DFS* dfs = nullptr;
 
         cin >> choice;
         switch (choice){
@@ -52,12 +57,31 @@ void menu() {
                     break;
                 }
                 cout << "B&B\n";
-                bnb = new DFS(fileReader.size);
-                cout << bnb->bnb_dfs_run(fileReader.tab) << endl;
-                //bnb->showTheShortestPath();
+                bnb = new BranchAndBound(fileReader.size);
+                cout << bnb->bnb_run(fileReader.tab,0) << endl;
+                bnb->showTheShortestPath(fileReader.tab);
                 break;
             }
             case 5:{
+                if (fileReader.size == 0) {
+                    cout << "Wczytaj dane do obliczen.\n";
+                    break;
+                }
+                cout << "BFS\n";
+                bfs = new BFS(fileReader.size);
+                cout << bfs->bnb_bfs_run(fileReader.tab) << endl;
+                bfs->showTheShortestPath(fileReader.tab);
+                break;
+            }
+            case 6:{
+                if (fileReader.size == 0) {
+                    cout << "Wczytaj dane do obliczen.\n";
+                    break;
+                }
+                cout << "DFS\n";
+                dfs = new DFS(fileReader.size);
+                cout << dfs->bnb_dfs_run(fileReader.tab) << endl;
+                dfs->showTheShortestPath(fileReader.tab);
                 break;
             }
             case 0:

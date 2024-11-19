@@ -60,7 +60,6 @@ void FileReader::showTab() {
 // Funkcja generujaca losowe dane do tablicy NxN z wartosciami od 1 do sand
 // zwraca tablice NxN
 int** FileReader::loadRandomData(int N, int sand) {
-
     int* source = new int[N * N - N]; // tablica do przechowywania mozliwych wartosci
     ordertable(source, N * N - N); // inicjalizacja source wartosciami od 1 do N*N-N
     randomshuttle(source, N * N - N, 1, sand); // przemieszanie wartosci
@@ -86,8 +85,6 @@ void FileReader::ordertable(int randtab[], int number) {
     }
 }
 
-// Funkcja przemieszczajaca elementy w tablicy
-// testnumber i lpoj - parametry do generowania losowych liczb
 void FileReader::randomshuttle(int randtab[], int number, int testnumber, int lpoj) {
     if (number == 0)return;
     srand((lpoj * 100 + testnumber) * 845);

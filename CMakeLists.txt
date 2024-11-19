@@ -13,4 +13,6 @@ add_executable(Projekt_etap2 main.cpp
         Algorithms/DFS.h
         Algorithms/DFS.cpp
         Utils/Stack.h
+        Utils/ConfigFile.h
+        Utils/ConfigFile.cpp
 )

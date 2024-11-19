@@ -32,7 +32,7 @@ public:
 
     // Wywo�uje algorytm B&B
     int bnb_run(int** routes, bool time_measure);
-
+    void showTheShortestPath(int** costMatrix);
     // Funkcja rekurencyjna B&B
     void bnb(int* path, int start, int& minCost, int* bestPath, int** costMatrix, int size);
 
