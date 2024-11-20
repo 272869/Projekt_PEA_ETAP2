@@ -59,10 +59,10 @@ void FileReader::showTab() {
 
 // Funkcja generujaca losowe dane do tablicy NxN z wartosciami od 1 do sand
 // zwraca tablice NxN
-int** FileReader::loadRandomData(int N, int sand) {
+int** FileReader::loadRandomData(int N, int maxValue) {
     int* source = new int[N * N - N]; // tablica do przechowywania mozliwych wartosci
     ordertable(source, N * N - N); // inicjalizacja source wartosciami od 1 do N*N-N
-    randomshuttle(source, N * N - N, 1, sand); // przemieszanie wartosci
+    randomshuttle(source, N * N - N, 1, maxValue); // przemieszanie wartosci
     alocate(N); // alokacja pamieci dla tablicy NxN
     int k = 0;
     for (int i = 0; i < size; i++) {
@@ -78,6 +78,27 @@ int** FileReader::loadRandomData(int N, int sand) {
     return tab;
 }
 
+int** FileReader::loadRandomSymetricData(int N, int maxValue) {
+    int* source = new int[N * (N - 1) / 2]; // tablica na wartości dla górnego trójkąta macierzy
+    ordertable(source, N * (N - 1) / 2);    // inicjalizacja source wartościami od 1 do N*(N-1)/2
+    randomshuttle(source, N * (N - 1) / 2, 1, maxValue); // przemieszanie wartości
+    alocate(N); // alokacja pamięci dla tablicy NxN
+
+    int k = 0;
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (i == j) {
+                tab[i][j] = -1; // przekątna główna -1
+            } else if (i < j) {
+                tab[i][j] = source[k]; // przypisanie wartości z górnego trójkąta
+                k++;
+            } else {
+                tab[i][j] = tab[j][i]; // przypisanie wartości symetrycznej
+            }
+        }
+    }
+    return tab;
+}
 // Funkcja wypelniajaca tablice kolejnymi liczbami od 1 do number
 void FileReader::ordertable(int randtab[], int number) {
     for (int i = 0; i < number; i++) {

@@ -12,7 +12,8 @@ public:
         tab = NULL;
     }
     int** loadFromFile(std::string path);
-    int** loadRandomData(int N, int sand);
+    int** loadRandomData(int N, int maxValue);
+    int** loadRandomSymetricData(int N, int maxValue);
     void alocate(int N);
     void dealocate();
     void showTab();

@@ -5,7 +5,7 @@
 #include "../Algorithms/DFS.h"
 #include "../Algorithms/BranchAndBound.h"
 
-void Test::startTests() {
+/*void Test::startTests() {
     int size[] = {5, 6, 7, 8, 9, 10, 11}; // Rozmiary macierzy
     std::string format = "size, time[us]"; // Format nagłówka pliku CSV
 
@@ -99,7 +99,7 @@ long long Test::calculateTime(int algorithm, int** matrix) {
     switch (algorithm) {
         case 1: {  // Algorytm brute force
             bnb = new BranchAndBound(file_reader.size);
-            bnb->bnb_run(matrix,0);
+            bnb->bnb_run(matrix);
             break;
         }
         case 2: {  // Algorytm najbliższego sąsiada (Nearest Neighbour)
@@ -121,4 +121,4 @@ long long Test::calculateTime(int algorithm, int** matrix) {
     auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
     time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();  // Obliczenie czasu w mikrosekundach
     return time;
-}
+}*/

@@ -29,9 +29,8 @@ struct Node {
 
     // Destruktor
     ~Node() {
-//        std::cout << "Destruktor dla Node o adresie " << this << std::endl;
         delete[] path;
-        path = nullptr;  // Ustawienie wskaźnika na nullptr, aby uniknąć podwójnego zwalniania
+        path = nullptr;
     }
 };
 #endif //PROJEKT_ETAP2_NODE_H

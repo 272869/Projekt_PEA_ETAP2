@@ -1,4 +1,3 @@
-
 #include <climits>
 #include <algorithm>
 #include <iostream>
@@ -79,24 +78,53 @@ void DFS::dfs(Node* currentNode, int** costMatrix) {
     delete currentNode;
 }
 
-int DFS::bnb_dfs_run(int** costMatrix) {
+int DFS::bnb_dfs_run(int** costMatrix, int start) {
     Node* root = new Node(size);
-    root->path[0] = 1;
+    root->path[0] = start;
     root->level = 1;
-    root->bound = lowerBound(root->path, costMatrix, 1);
+    root->bound = lowerBound(root->path, costMatrix, root->level);
     dfs(root, costMatrix);
     return minCost;
 }
 
-// Wyświetlenie najkrótszej ścieżki i kosztu
-void DFS::showTheShortestPath(int** costMatrix) {
-    if (bestPath == nullptr) {
-        return;
+int DFS::startFromEachVertex(int** costMatrix) {
+    // Wywołanie branch and bound dla każdego wierzchołka początkowego
+    for (int start = 0; start < size; start++) {
+        minCost = INT_MAX; // Resetujemy minimalny koszt przed każdym wywołaniem
+        bestPath = new int[size]; // Resetujemy najlepszą ścieżkę przed każdym wywołaniem
+        bnb_dfs_run(costMatrix, start);  // Wywołanie z wierzchołkiem początkowym `start`
+        if(minCost < allVertexMinCost)
+        {
+            allVertexMinCost = minCost;
+            allVertexBestPath = bestPath;
+        }
+        // Wyświetlanie każdej ścieżki po wykonaniu DFS z danego wierzchołka
+        //showThePath(start, costMatrix);
     }
+    return minCost;
+}
+
+// Funkcja do wyświetlania każdej ścieżki w trakcie wywołania DFS
+void DFS::showThePath(int start, int** costMatrix) {
+    // Ścieżka aktualna
+    std::cout << "Ścieżka zaczynająca się od wierzchołka " << start << ": ";
     for (int i = 0; i < size; i++) {
         std::cout << bestPath[i] << " -> ";
     }
     std::cout << bestPath[0] << std::endl; // Powrót do punktu początkowego
+
+    // Obliczanie kosztu tej ścieżki
     int cost = calculateCost(bestPath, costMatrix, size);
-    std::cout << "Koszt: " << cost << std::endl;
+    std::cout << "Koszt tej ścieżki: " << cost << std::endl;
+}
+
+// Funkcja do wyświetlania najlepszej ścieżki (po zakończeniu wszystkich wywołań DFS)
+void DFS::showTheShortestPath(int** costMatrix) {
+    std::cout << "Najkrótsza ścieżka: ";
+    if(allVertexBestPath == nullptr) return;
+    for (int i = 0; i < size; i++) {
+        std::cout << allVertexBestPath[i] << " -> ";
+    }
+    std::cout << allVertexBestPath[0] << std::endl;
+    std::cout << "Koszt najkrótszej ścieżki: " << allVertexMinCost << std::endl;
 }

@@ -11,6 +11,8 @@ private:
     int size;       // Liczba miast
     int minCost;    // Minimalny koszt rozwiązania
     int* bestPath;  // Najlepsza znaleziona trasa
+    int allVertexMinCost;
+    int *allVertexBestPath;
 
     // Funkcja pomocnicza do obliczania kosztu pełnej ścieżki
     int calculateCost(int* path, int** costMatrix, int pathSize);
@@ -28,6 +30,8 @@ public:
         for (int i = 0; i < size; ++i) {
             bestPath[i] = -1;
         }
+        allVertexMinCost = INT_MAX;
+        allVertexBestPath = nullptr;
     }
 
     // Destruktor klasy
@@ -35,8 +39,10 @@ public:
         delete[] bestPath;
     }
     void showTheShortestPath(int** costMatrix);
+    void showThePath(int start, int** costMatrix);
     // Funkcja uruchamiająca algorytm DFS
-    int bnb_dfs_run(int** costMatrix);
+    int bnb_dfs_run(int** costMatrix, int start);
+    int startFromEachVertex(int** costMatrix);
 };
 
 

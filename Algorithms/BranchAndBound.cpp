@@ -2,74 +2,72 @@
 
 using namespace std;
 
-int BranchAndBound::lowerBound(int* currentPath, int** distances, int currentPathSize) {
-    if (currentPathSize == size) return -1;	// Je�li �cie�ka jest pe�na, zwr�� -1
-    int value = 0;	// zmienna przechowuj�ca warto�� dolnego ograniczenia
+int BranchAndBound::calculateCost(int* path, int** costMatrix, int size) {
+    int cost = 0;
+    for (int i = 0; i < size - 1; i++) {
+        cost += costMatrix[path[i]][path[i + 1]];
+    }
+    cost += costMatrix[path[size - 1]][path[0]];
+    return cost;
+}
 
-    // Sumowanie odleglosci mi�dzy miastami odwiedzonymi
+int BranchAndBound::lowerBound(int* currentPath, int** distances, int currentPathSize) {
+    if (currentPathSize == size) return -1;
+    int value = 0;
     for (int i = 1; i < currentPathSize; i++) {
         value += distances[currentPath[i - 1]][currentPath[i]];
     }
-
-    // Resetowanie tablicy miast, które zostały odwiedzone
     for (int i = 0; i < size; i++) {
         rest[i] = 0;
     }
-
-    // Aktualizacja tablicy miast w obecnej trasie
     for (int i = 0; i < currentPathSize; i++) {
         rest[currentPath[i]] = 1;
     }
-
-    // Szukanie minimalnych kosztów dla nieodwiedzonych miast
     for (int i = 0; i < size; i++) {
-        if (rest[i] == 1 && currentPath[currentPathSize - 1] != i) continue; // Pomijanie odwiedzonych miast
-        int min = 100000;
+        if (rest[i] == 1 && currentPath[currentPathSize - 1] != i) continue;
+        int min = INT_MAX;
         for (int j = 0; j < size; j++) {
             if (rest[j] == 1 || i == j) continue;
-            if (distances[i][j] < min) min = distances[i][j]; // Minimalny koszt przejścia jeśli znaleziony
+            if (distances[i][j] < min) min = distances[i][j];
         }
 
-        // Dla nieodwiedzonych miast, sprawdza również koszt powrotu do punktu początkowego
         if (rest[i] != 1) {
             if (distances[i][0] < min) min = distances[i][0];
         }
 
-        value += min; // Dodanie minimalnego kosztu dla miasta i
+        value += min;
     }
-    return value; // Zwrócenie dolnego ograniczenia
+    return value;
 }
 
 // Funkcja rekurencyjna B&B
 void BranchAndBound::bnb(int* currentPath, int start, int& minCost, int* bestPath, int** costMatrix, int size) {
-    if (start == size) { // Jeśli wszystkie miasta odwiedzone
-        int currentCost = calculateCost(currentPath, costMatrix, size); // Obliczanie kosztu pełnej trasy
-        if (currentCost < minCost) { // Aktualizacja minimalnego kosztu
+    if (start == size) {
+        int currentCost = calculateCost(currentPath, costMatrix, size);
+        if (currentCost < minCost) {
             minCost = currentCost;
             for (int i = 0; i < size; ++i) {
-                bestPath[i] = currentPath[i]; // Zapisanie nowej najlepszej trasy
+                bestPath[i] = currentPath[i];
             }
         }
         return;
     }
 
-    // Przeszukiwanie wszystkich możliwych tras
     for (int i = start; i < size; ++i) {
-        swap(currentPath[start], currentPath[i]); // Zamiana miast do permutacji
+        swap(currentPath[start], currentPath[i]);
 
-        int bound = lowerBound(currentPath, costMatrix, start + 1); // Obliczanie dolnego ograniczenia
+        int bound = lowerBound(currentPath, costMatrix, start + 1);
         if (bound < minCost) {
-            bnb(currentPath, start + 1, minCost, bestPath, costMatrix, size); // Rekurencyjne wywołanie funkcji
+            bnb(currentPath, start + 1, minCost, bestPath, costMatrix, size);
         }
 
-        swap(currentPath[start], currentPath[i]); // Powrót do poprzedniego stanu po rekurencji
+        swap(currentPath[start], currentPath[i]);
     }
 }
 
 // Uruchomienie algorytmu B&B
-int BranchAndBound::bnb_run(int** routes, bool time_measure) {
-    int currentCity = 0; // Miasto początkowe
-    int currentCost = 0; // Koszt aktualnej trasy
+int BranchAndBound::bnb_run(int** routes, int start) {
+    start = 0; // Miasto początkowe
     int result = 0; // Zmienna przechowująca koszt trasy
     int* path = new int[size]; // Tablica do przechowywania aktualnej trasy
 
@@ -81,24 +79,48 @@ int BranchAndBound::bnb_run(int** routes, bool time_measure) {
     for (int i = 0; i < size; i++) {
         bestPath[i] = -1; // -1 oznacza brak wyniku
     }
-
-    bnb(path, currentCity, this->minCost, bestPath, routes, size);
-
+    bnb(path, start, this->minCost, bestPath, routes, size);
     result = calculateCost(bestPath, routes, size);
-
     return result;
 }
 
-// Wyświetlenie najkrótszej ścieżki i kosztu
-void BranchAndBound::showTheShortestPath(int** costMatrix) {
-    if (bestPath == nullptr) {
-        return;
+int BranchAndBound::startFromEachVertex(int** costMatrix) {
+    // Wywołanie branch and bound dla każdego wierzchołka początkowego
+    for (int start = 0; start < size; start++) {
+        minCost = INT_MAX; // Resetujemy minimalny koszt przed każdym wywołaniem
+        bestPath = new int[size]; // Resetujemy najlepszą ścieżkę przed każdym wywołaniem
+        bnb_run(costMatrix, start);  // Wywołanie z wierzchołkiem początkowym `start`
+        if(minCost < allVertexMinCost)
+        {
+            allVertexMinCost = minCost;
+            allVertexBestPath = bestPath;
+        }
+        // Wyświetlanie każdej ścieżki po wykonaniu DFS z danego wierzchołka
+        showThePath(start, costMatrix);
     }
-    for (int i = 0; i < size; i++) {
-        cout << bestPath[i] << " -> ";
-    }
-    cout << bestPath[0] << endl; // Powrót do początkowego miasta
+    return minCost;
+}
 
+void BranchAndBound::showThePath(int start, int** costMatrix) {
+    // Ścieżka aktualna
+    std::cout << "Ścieżka zaczynająca się od wierzchołka " << start << ": ";
+    for (int i = 0; i < size; i++) {
+        std::cout << bestPath[i] << " -> ";
+    }
+    std::cout << bestPath[0] << std::endl; // Powrót do punktu początkowego
+
+    // Obliczanie kosztu tej ścieżki
     int cost = calculateCost(bestPath, costMatrix, size);
-    cout << "Koszt: " << cost << endl;
+    std::cout << "Koszt tej ścieżki: " << cost << std::endl;
+}
+
+// Funkcja do wyświetlania najlepszej ścieżki (po zakończeniu wszystkich wywołań DFS)
+void BranchAndBound::showTheShortestPath(int** costMatrix) {
+    std::cout << "Najkrótsza ścieżka: ";
+    if(allVertexBestPath == nullptr) return;
+    for (int i = 0; i < size; i++) {
+        std::cout << allVertexBestPath[i] << " -> ";
+    }
+    std::cout << allVertexBestPath[0] << std::endl;
+    std::cout << "Koszt najkrótszej ścieżki: " << allVertexMinCost << std::endl;
 }
