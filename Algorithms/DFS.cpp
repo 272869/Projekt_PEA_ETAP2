@@ -107,7 +107,7 @@ int DFS::startFromEachVertex(int** costMatrix) {
 // Funkcja do wyświetlania każdej ścieżki w trakcie wywołania DFS
 void DFS::showThePath(int start, int** costMatrix) {
     // Ścieżka aktualna
-    std::cout << "Ścieżka zaczynająca się od wierzchołka " << start << ": ";
+    std::cout << "Scieżka od wierzcholka " << start << ": ";
     for (int i = 0; i < size; i++) {
         std::cout << bestPath[i] << " -> ";
     }
@@ -115,16 +115,16 @@ void DFS::showThePath(int start, int** costMatrix) {
 
     // Obliczanie kosztu tej ścieżki
     int cost = calculateCost(bestPath, costMatrix, size);
-    std::cout << "Koszt tej ścieżki: " << cost << std::endl;
+    std::cout << "Koszt tej sciezki: " << cost << std::endl;
 }
 
 // Funkcja do wyświetlania najlepszej ścieżki (po zakończeniu wszystkich wywołań DFS)
 void DFS::showTheShortestPath(int** costMatrix) {
-    std::cout << "Najkrótsza ścieżka: ";
+    std::cout << "Najkrotsza sciezka: ";
     if(allVertexBestPath == nullptr) return;
     for (int i = 0; i < size; i++) {
         std::cout << allVertexBestPath[i] << " -> ";
     }
     std::cout << allVertexBestPath[0] << std::endl;
-    std::cout << "Koszt najkrótszej ścieżki: " << allVertexMinCost << std::endl;
+    std::cout << "Koszt najkrotszej sciezki: " << allVertexMinCost << std::endl;
 }

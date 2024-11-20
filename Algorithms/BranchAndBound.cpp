@@ -1,4 +1,5 @@
 #include "BranchAndBound.h"
+#include "../Utils/PriorityQueue.h"
 
 using namespace std;
 
@@ -84,6 +85,7 @@ int BranchAndBound::bnb_run(int** routes, int start) {
     return result;
 }
 
+
 int BranchAndBound::startFromEachVertex(int** costMatrix) {
     // Wywołanie branch and bound dla każdego wierzchołka początkowego
     for (int start = 0; start < size; start++) {
@@ -96,14 +98,14 @@ int BranchAndBound::startFromEachVertex(int** costMatrix) {
             allVertexBestPath = bestPath;
         }
         // Wyświetlanie każdej ścieżki po wykonaniu DFS z danego wierzchołka
-        showThePath(start, costMatrix);
+        //showThePath(start, costMatrix);
     }
     return minCost;
 }
 
 void BranchAndBound::showThePath(int start, int** costMatrix) {
     // Ścieżka aktualna
-    std::cout << "Ścieżka zaczynająca się od wierzchołka " << start << ": ";
+    std::cout << "Sciezka od wierzcholka " << start << ": ";
     for (int i = 0; i < size; i++) {
         std::cout << bestPath[i] << " -> ";
     }
@@ -111,16 +113,16 @@ void BranchAndBound::showThePath(int start, int** costMatrix) {
 
     // Obliczanie kosztu tej ścieżki
     int cost = calculateCost(bestPath, costMatrix, size);
-    std::cout << "Koszt tej ścieżki: " << cost << std::endl;
+    std::cout << "Koszt tej sciezki: " << cost << std::endl;
 }
 
 // Funkcja do wyświetlania najlepszej ścieżki (po zakończeniu wszystkich wywołań DFS)
 void BranchAndBound::showTheShortestPath(int** costMatrix) {
-    std::cout << "Najkrótsza ścieżka: ";
+    std::cout << "Najkrotsza sciezka: ";
     if(allVertexBestPath == nullptr) return;
     for (int i = 0; i < size; i++) {
         std::cout << allVertexBestPath[i] << " -> ";
     }
     std::cout << allVertexBestPath[0] << std::endl;
-    std::cout << "Koszt najkrótszej ścieżki: " << allVertexMinCost << std::endl;
+    std::cout << "Koszt najkrotszej sciezki: " << allVertexMinCost << std::endl;
 }

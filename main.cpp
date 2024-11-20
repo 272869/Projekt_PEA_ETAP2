@@ -1,17 +1,19 @@
 #include <iostream>
 #include "Utils/FileReader.h"
-#include "Algorithms/BFS.h"
-#include "Algorithms/DFS.h"
-#include "Algorithms/BranchAndBound.h"
+
+#include "Utils/ConfigFile.h"
+#include "Utils/Test.h"
 
 using namespace std;
 
 void menu();
 
 int main(){
-    //Test test;
-    //test.startTests();
-    menu();
+    Test test;
+    test.startTests();
+    //menu();
+    //ConfigFile configHandler("C:\\Users\\pitko\\Desktop\\Studia\\PEA\\Projekt_etap2\\cmake-build-debug\\config.txt");
+    //configHandler.parseConfig();
 }
 
 void menu() {
@@ -69,8 +71,11 @@ void menu() {
                 cout << "B&B\n";
                 bnb = new BranchAndBound(fileReader.size);
                 cout << bnb->bnb_run(fileReader.tab,0) << endl;
+                bnb->showThePath(0,fileReader.tab);
+
                 cout << bnb->startFromEachVertex(fileReader.tab) << endl;
                 bnb->showTheShortestPath(fileReader.tab);
+
                 break;
             }
             case 6:{
@@ -80,9 +85,11 @@ void menu() {
                 }
                 cout << "BFS\n";
                 bfs = new BFS(fileReader.size);
-                //cout << bfs->bnb_bfs_run(fileReader.tab,0) << endl;
-                cout << bfs->startFromEachVertex(fileReader.tab) << endl;
-                bfs->showTheShortestPath(fileReader.tab);
+                cout << bfs->bnb_bfs_run(fileReader.tab,0) << endl;
+                bfs->showThePath(0, fileReader.tab);
+
+                //cout << bfs->startFromEachVertex(fileReader.tab) << endl;
+                //bfs->showTheShortestPath(fileReader.tab);
                 break;
             }
             case 7:{
@@ -92,9 +99,11 @@ void menu() {
                 }
                 cout << "DFS\n";
                 dfs = new DFS(fileReader.size);
-                //cout << dfs->bnb_dfs_run(fileReader.tab,0) << endl;
-                cout << dfs->startFromEachVertex(fileReader.tab) << endl;
-                dfs->showTheShortestPath(fileReader.tab);
+                cout << dfs->bnb_dfs_run(fileReader.tab,0) << endl;
+                dfs->showThePath(0,fileReader.tab);
+
+                //cout << dfs->startFromEachVertex(fileReader.tab) << endl;
+                //dfs->showTheShortestPath(fileReader.tab);
                 break;
             }
             case 0:

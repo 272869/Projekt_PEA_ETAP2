@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include "../Utils/Node.h"
+
 class BranchAndBound {
 public:
     int size = 0; // Liczba miast (rozmiar problemu)

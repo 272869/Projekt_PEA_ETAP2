@@ -18,4 +18,5 @@ add_executable(Projekt_etap2 main.cpp
         Utils/Queue.h
         Utils/Test.cpp
         Utils/Test.h
+        Utils/PriorityQueue.h
 )

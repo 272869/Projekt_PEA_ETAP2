@@ -45,7 +45,7 @@ int BFS::bnb_bfs_run(int** costMatrix, int start) {
     Node* root = new Node(size);
     root->path[0] = start;
     root->level = 1;
-    root->bound = lowerBound(root->path, costMatrix, 1);
+    root->bound = lowerBound(root->path, costMatrix, size);
     queue.enqueue(root);
 
     bestPath = new int[size]; // Zapisujemy najlepszą trasę jako pole klasy
@@ -107,7 +107,7 @@ int BFS::startFromEachVertex(int** costMatrix) {
             allVertexBestPath = bestPath;
         }
         // Wyświetlanie każdej ścieżki po wykonaniu DFS z danego wierzchołka
-        showThePath(start, costMatrix);
+        //showThePath(start, costMatrix);
     }
     return minCost;
 }
@@ -115,7 +115,7 @@ int BFS::startFromEachVertex(int** costMatrix) {
 // Funkcja do wyświetlania każdej ścieżki w trakcie działania BFS
 void BFS::showThePath(int start, int** costMatrix) {
     // Ścieżka aktualna
-    std::cout << "Ścieżka zaczynająca się od wierzchołka " << start << ": ";
+    std::cout << "Sciezka od wierzcholka " << start << ": ";
     for (int i = 0; i < size; i++) {
         std::cout << bestPath[i] << " -> ";
     }
@@ -123,16 +123,16 @@ void BFS::showThePath(int start, int** costMatrix) {
 
     // Obliczanie kosztu tej ścieżki
     int cost = calculateCost(bestPath, costMatrix, size);
-    std::cout << "Koszt tej ścieżki: " << cost << std::endl;
+    std::cout << "Koszt tej sciezki: " << cost << std::endl;
 }
 
 // Funkcja do wyświetlania najlepszej ścieżki (po zakończeniu wszystkich wywołań BFS)
 void BFS::showTheShortestPath(int** costMatrix) {
-    std::cout << "Najkrótsza ścieżka: ";
+    std::cout << "Najkrotsza sciezka: ";
     if(allVertexBestPath == nullptr) return;
     for (int i = 0; i < size; i++) {
         std::cout << allVertexBestPath[i] << " -> ";
     }
     std::cout << allVertexBestPath[0] << std::endl;
-    std::cout << "Koszt najkrótszej ścieżki: " << allVertexMinCost << std::endl;
+    std::cout << "Koszt najkrotszej sciezki: " << allVertexMinCost << std::endl;
 }

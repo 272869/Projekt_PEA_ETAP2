@@ -5,7 +5,7 @@
 #include "../Algorithms/DFS.h"
 #include "../Algorithms/BranchAndBound.h"
 
-/*void Test::startTests() {
+void Test::startTests() {
     int size[] = {5, 6, 7, 8, 9, 10, 11}; // Rozmiary macierzy
     std::string format = "size, time[us]"; // Format nagłówka pliku CSV
 
@@ -91,34 +91,39 @@ void Test::typeOfDataMessage(std::string message) {
 // Obliczanie czasu wykonania algorytmu
 long long Test::calculateTime(int algorithm, int** matrix) {
     long long time;
-
-    auto timeStart = std::chrono::high_resolution_clock::now();  // Start pomiaru czasu
     BranchAndBound* bnb = nullptr;
     BFS* bfs = nullptr;
     DFS* dfs = nullptr;
     switch (algorithm) {
         case 1: {  // Algorytm brute force
             bnb = new BranchAndBound(file_reader.size);
-            bnb->bnb_run(matrix);
+            auto timeStart = std::chrono::high_resolution_clock::now();  // Start pomiaru czasu
+            bnb->startFromEachVertex(matrix);
+            auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
+            time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();
             break;
         }
         case 2: {  // Algorytm najbliższego sąsiada (Nearest Neighbour)
             bfs = new BFS(file_reader.size);
-            bfs->bnb_bfs_run(matrix);
+            auto timeStart = std::chrono::high_resolution_clock::now();  // Start pomiaru czasu
+            bfs->startFromEachVertex(matrix);
+            auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
+            time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();
             break;
         }
         case 3: {
             dfs = new DFS(file_reader.size);
-            dfs->bnb_dfs_run(matrix);
-
+            auto timeStart = std::chrono::high_resolution_clock::now();  // Start pomiaru czasu
+            dfs->startFromEachVertex(matrix);
+            auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
+            time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();
             break;
         }
         default: {
             std::cerr << "Nieprawidłowy wybór algorytmu!" << std::endl;
+            time=0;
             break;
         }
     }
-    auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
-    time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();  // Obliczenie czasu w mikrosekundach
     return time;
-}*/
+}
