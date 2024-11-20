@@ -1,7 +1,7 @@
 #include <climits>
 #include <iostream>
 #include "BFS.h"
-#include "../Utils/PriorityQueue.h"
+#include "../Utils/Queue.h"
 
 using namespace std;
 

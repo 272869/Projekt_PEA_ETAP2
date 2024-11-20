@@ -3,13 +3,16 @@
 #include "Algorithms/BFS.h"
 #include "Algorithms/DFS.h"
 #include "Algorithms/BranchAndBound.h"
+#include "Utils/Test.h"
 
 using namespace std;
 
 void menu();
 
 int main(){
-    menu();
+    Test test;
+    test.startTests();
+    //menu();
 }
 
 void menu() {
