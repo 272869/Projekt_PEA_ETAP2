@@ -12,11 +12,9 @@ add_executable(Projekt_etap2 main.cpp
         Algorithms/BFS.cpp
         Algorithms/DFS.h
         Algorithms/DFS.cpp
-        Utils/Stack.h
         Utils/ConfigFile.h
         Utils/ConfigFile.cpp
         Utils/Queue.h
         Utils/Test.cpp
         Utils/Test.h
-        Utils/PriorityQueue.h
 )

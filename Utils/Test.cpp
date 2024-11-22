@@ -6,7 +6,7 @@
 #include "../Algorithms/BranchAndBound.h"
 
 void Test::startTests() {
-    int size[] = {5, 6, 7, 8, 9, 10, 11}; // Rozmiary macierzy
+    int size[] = {4, 5, 6, 7, 8, 9, 10}; // Rozmiary macierzy
     std::string format = "size, time[us]"; // Format nagłówka pliku CSV
 
     // Zapis nagłówka do plików
@@ -17,7 +17,7 @@ void Test::startTests() {
         long long sumTimeBFS = 0;
         long long sumTimeDFS = 0;
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 50; i++) {
             // Generowanie danych
             file_reader.loadRandomData(s, 99);
             int** matrix = file_reader.tab; // Wskaźnik na wygenerowaną macierz
@@ -36,16 +36,14 @@ void Test::startTests() {
             sumTimeDFS += timeRand;
 
             // Zwolnienie pamięci
-            for (int row = 0; row < s; row++) {
-                delete[] matrix[row];
-            }
+            for (int row = 0; row < s; row++) delete[] matrix[row];
             delete[] matrix;
         }
 
         // Obliczanie średnich czasów
-        double avgTimeLC = static_cast<double>(sumTimeLC) / 100.0;
-        double avgTimeBFS = static_cast<double>(sumTimeBFS) / 100.0;
-        double avgTimeDFS = static_cast<double>(sumTimeDFS) / 100.0;
+        double avgTimeLC = static_cast<double>(sumTimeLC) / 50.0;
+        double avgTimeBFS = static_cast<double>(sumTimeBFS) / 50.0;
+        double avgTimeDFS = static_cast<double>(sumTimeDFS) / 50.0;
 
         std::cout << "LC:   " << s << ", avg time: " << avgTimeLC << " [us]" << std::endl;
         std::cout << "BFS:   " << s << ", avg time: " << avgTimeBFS << " [us]" << std::endl;
@@ -98,7 +96,8 @@ long long Test::calculateTime(int algorithm, int** matrix) {
         case 1: {  // Algorytm brute force
             bnb = new BranchAndBound(file_reader.size);
             auto timeStart = std::chrono::high_resolution_clock::now();  // Start pomiaru czasu
-            bnb->startFromEachVertex(matrix);
+            //bnb->startFromEachVertex(matrix);
+            bnb->bnb_run(matrix,0);
             auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
             time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();
             break;
@@ -106,7 +105,8 @@ long long Test::calculateTime(int algorithm, int** matrix) {
         case 2: {  // Algorytm najbliższego sąsiada (Nearest Neighbour)
             bfs = new BFS(file_reader.size);
             auto timeStart = std::chrono::high_resolution_clock::now();  // Start pomiaru czasu
-            bfs->startFromEachVertex(matrix);
+            //bfs->startFromEachVertex(matrix);
+            bfs->bnb_bfs_run(matrix,0);
             auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
             time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();
             break;
@@ -114,7 +114,8 @@ long long Test::calculateTime(int algorithm, int** matrix) {
         case 3: {
             dfs = new DFS(file_reader.size);
             auto timeStart = std::chrono::high_resolution_clock::now();  // Start pomiaru czasu
-            dfs->startFromEachVertex(matrix);
+            //dfs->startFromEachVertex(matrix);
+            dfs->bnb_dfs_run(matrix,0);
             auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
             time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();
             break;

@@ -1,33 +1,22 @@
-//
-// Created by pitko on 18.11.2024.
-//
-
 #ifndef PROJEKT_ETAP2_NODE_H
 #define PROJEKT_ETAP2_NODE_H
+
 struct Node {
-    int* path;   // Dynamiczna tablica reprezentująca ścieżkę (odwiedzone miasta)
-    int cost;    // Koszt bieżącej ścieżki
-    int level;   // Poziom w drzewie, ile miast zostało odwiedzonych
-    int bound;   // Dolne ograniczenie kosztu
+    int* path;
+    int cost;
+    int depth;
+    int bound;
 
-    // Konstruktor
-    Node(int N) : cost(0), level(0), bound(0) {
-        path = new int[N];
-        for (int i = 0; i < N; i++) {
-            path[i] = -1;  // Inicjalizujemy wszystkie elementy, np. na -1
-        }
+    Node(int size) : cost(0), depth(0), bound(0) {
+        path = new int[size];
+        for (int i = 0; i < size; i++) path[i] = -1;
     }
 
-    // Konstruktor kopiujący
-    Node(const Node& other, int N) : cost(other.cost), level(other.level), bound(other.bound) {
-        path = new int[N];
-        for (int i = 0; i < N; i++) {
-            path[i] = other.path[i];  // Kopiujemy wartości ze źródła
-        }
+    Node(const Node& source, int size) : cost(source.cost), depth(source.depth), bound(source.bound) {
+        path = new int[size];
+        for (int i = 0; i < size; i++) path[i] = source.path[i];
     }
 
-
-    // Destruktor
     ~Node() {
         delete[] path;
         path = nullptr;

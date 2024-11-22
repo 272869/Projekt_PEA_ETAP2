@@ -15,7 +15,6 @@ public:
     int** loadRandomData(int N, int maxValue);
     int** loadRandomSymetricData(int N, int maxValue);
     void alocate(int N);
-    void dealocate();
     void showTab();
     void ordertable(int randtab[], int number);
     void randomshuttle(int randtab[], int number, int testnumber, int lpoj);

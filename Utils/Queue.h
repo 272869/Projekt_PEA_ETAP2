@@ -1,64 +1,49 @@
-//
-// Created by pitko on 18.11.2024.
-//
-
 #ifndef PROJEKT_ETAP2_PRIORITYQUEUE_H
 #define PROJEKT_ETAP2_PRIORITYQUEUE_H
 
 #include <iostream>
 #include "Node.h"
-using namespace std;
 
 struct Queue {
-    Node** nodes;  // Dynamiczna tablica wskaźników na węzły
-    int front, rear, size;
+    Node** nodes;
+    int start;
+    int end;
+    int capacity;
 
-    // Inicjalizacja kolejki
-    void init(int maxSize) {
-        nodes = new Node*[maxSize];  // Dynamiczna alokacja dla tablicy wskaźników
-        front = 0;
-        rear = 0;
-        size = maxSize;
+    void initialize(int initialSize) {
+        nodes = new Node*[initialSize];
+        start = 0;
+        end = 0;
+        capacity = initialSize;
     }
-    // Sprawdzenie, czy kolejka jest pusta
-    bool isEmpty() {
-        return front == rear;
+
+    void adjustSize(int newCapacity) {
+        Node** tempArray = new Node*[newCapacity];
+        int index = 0;
+        for (int i = start; i < end; i++) tempArray[index++] = nodes[i];
+        delete[] nodes;
+        nodes = tempArray;
+        start = 0;
+        end = index;
+        capacity = newCapacity;
     }
-    // Dodanie elementu do kolejki
-    void enqueue(Node* node) {
-        if (rear >= size) {
-            // Jeśli kolejka jest pełna, możesz rozważyć zwiększenie jej rozmiaru
-            // Przykładowe powiększenie o 2 razy
-            resize(size * 2);
-        }
-        nodes[rear++] = node;
+
+    bool isQueueEmpty() {
+        return start == end;
     }
-    // Pobranie elementu z kolejki
-    Node* dequeue() {
-        return nodes[front++];
+
+    void add(Node* node) {
+        if (end >= capacity) adjustSize(capacity * 2);
+        nodes[end++] = node;
     }
-    // Zwiększenie rozmiaru kolejki
-    void resize(int newSize) {
-        Node** newNodes = new Node*[newSize];
-        int i = 0;
-        // Kopiujemy elementy do nowej tablicy
-        for (int j = front; j < rear; j++) {
-            newNodes[i++] = nodes[j];
-        }
-        delete[] nodes;  // Zwalniamy starą tablicę
-        nodes = newNodes; // Przypisujemy nową tablicę
-        front = 0;
-        rear = i;
-        size = newSize;
+
+    Node* remove() {
+        return nodes[start++];
     }
-    // Destruktor
+
     ~Queue() {
-        for (int i = front; i < rear; i++) {
-            if (nodes[i] != nullptr) {
-                delete nodes[i];  // Zwalniamy każdy węzeł tylko, jeśli nie jest nullptr
-            }
-        }
-        delete[] nodes;  // Zwalniamy tablicę wskaźników
+        for (int i = start; i < end; i++) if (nodes[i] != nullptr) delete nodes[i];
+        delete[] nodes;
     }
 };
 #endif //PROJEKT_ETAP2_PRIORITYQUEUE_H

@@ -24,31 +24,18 @@ int** FileReader::loadFromFile(std::string path) {
 
 // Funkcja alokujaca pamiec dla tablicy o rozmiarze NxN
 void FileReader::alocate(int N) {
-    if (tab != NULL)dealocate(); // zwolnienie pamieci, jesli byla juz zaalokowana
     this->size = N; // przypisanie rozmiaru tablicy
     tab = new int* [N];
-    for (int i = 0; i < N; ++i) {
-        tab[i] = new int[N]; // utworzenie wierszy
-    }
+    for (int i = 0; i < N; ++i) tab[i] = new int[N];
 }
 
-// zwalnianie pamieci
-void FileReader::dealocate() {
-    if (tab) {   // czy tablica istnieje
-        for (int i = 0; i < size; ++i) {
-            //delete[] tab[i];
-        }
-        //delete[] tab;
-    }
-}
 
 // wyswietlanie tablicy
 void FileReader::showTab() {
     if (tab != NULL) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (tab[i][j] != -1)
-                    std::cout << std::setw(3) << tab[i][j] << " ";
+                if (tab[i][j] != -1) std::cout << std::setw(3) << tab[i][j] << " ";
                 else std::cout << "   " << " ";
             }
             std::cout << std::endl;
@@ -87,23 +74,18 @@ int** FileReader::loadRandomSymetricData(int N, int maxValue) {
     int k = 0;
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
-            if (i == j) {
-                tab[i][j] = -1; // przekątna główna -1
-            } else if (i < j) {
+            if (i == j) tab[i][j] = -1; // przekątna główna -1
+            else if (i < j) {
                 tab[i][j] = source[k]; // przypisanie wartości z górnego trójkąta
                 k++;
-            } else {
-                tab[i][j] = tab[j][i]; // przypisanie wartości symetrycznej
-            }
+            } else tab[i][j] = tab[j][i]; // przypisanie wartości symetrycznej
         }
     }
     return tab;
 }
-// Funkcja wypelniajaca tablice kolejnymi liczbami od 1 do number
+
 void FileReader::ordertable(int randtab[], int number) {
-    for (int i = 0; i < number; i++) {
-        randtab[i] = i + 1;
-    }
+    for (int i = 0; i < number; i++) randtab[i] = i + 1;
 }
 
 void FileReader::randomshuttle(int randtab[], int number, int testnumber, int lpoj) {
