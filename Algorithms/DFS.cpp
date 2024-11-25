@@ -29,6 +29,7 @@ int DFS::lowerBound(int* currentPath, int** distances, int currentPathSize) {
 
 // Tworzy dzieci dla bieżącego węzła `currentNode` i eksploruje każdą z gałęzi.
 void DFS::dfs(Node* currentNode, int** costMatrix) {
+
     if (currentNode->bound >= minCost) {
         delete currentNode;
         return;
@@ -63,7 +64,7 @@ void DFS::dfs(Node* currentNode, int** costMatrix) {
 
         // Tworzy nowe dziecko (nową gałąź).
         Node* childNode = new Node(size);
-        for (int j = 0; j < currentNode->depth; ++j) childNode->path[j] = currentNode->path[j];
+        for (int j = 0; j < currentNode->depth; ++j) childNode->path[j] = currentNode->path[j]; //kopiujemy sciezke z biezacego wezla
         childNode->path[currentNode->depth] = i; // Dodaje miasto `i` do ścieżki.
         childNode->depth = currentNode->depth + 1; // Zwiększa głębokość.
         childNode->cost = currentNode->cost + costMatrix[currentNode->path[currentNode->depth - 1]][i];

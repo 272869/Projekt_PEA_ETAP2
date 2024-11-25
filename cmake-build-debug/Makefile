@@ -152,30 +152,6 @@ Algorithms/BFS.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projekt_etap2.dir\build.make CMakeFiles/Projekt_etap2.dir/Algorithms/BFS.cpp.s
 .PHONY : Algorithms/BFS.cpp.s
 
-Algorithms/BranchAndBound.obj: Algorithms/BranchAndBound.cpp.obj
-.PHONY : Algorithms/BranchAndBound.obj
-
-# target to build an object file
-Algorithms/BranchAndBound.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projekt_etap2.dir\build.make CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.obj
-.PHONY : Algorithms/BranchAndBound.cpp.obj
-
-Algorithms/BranchAndBound.i: Algorithms/BranchAndBound.cpp.i
-.PHONY : Algorithms/BranchAndBound.i
-
-# target to preprocess a source file
-Algorithms/BranchAndBound.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projekt_etap2.dir\build.make CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.i
-.PHONY : Algorithms/BranchAndBound.cpp.i
-
-Algorithms/BranchAndBound.s: Algorithms/BranchAndBound.cpp.s
-.PHONY : Algorithms/BranchAndBound.s
-
-# target to generate assembly for a file
-Algorithms/BranchAndBound.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projekt_etap2.dir\build.make CMakeFiles/Projekt_etap2.dir/Algorithms/BranchAndBound.cpp.s
-.PHONY : Algorithms/BranchAndBound.cpp.s
-
 Algorithms/DFS.obj: Algorithms/DFS.cpp.obj
 .PHONY : Algorithms/DFS.obj
 
@@ -199,6 +175,30 @@ Algorithms/DFS.s: Algorithms/DFS.cpp.s
 Algorithms/DFS.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projekt_etap2.dir\build.make CMakeFiles/Projekt_etap2.dir/Algorithms/DFS.cpp.s
 .PHONY : Algorithms/DFS.cpp.s
+
+Algorithms/LowestCost.obj: Algorithms/LowestCost.cpp.obj
+.PHONY : Algorithms/LowestCost.obj
+
+# target to build an object file
+Algorithms/LowestCost.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projekt_etap2.dir\build.make CMakeFiles/Projekt_etap2.dir/Algorithms/LowestCost.cpp.obj
+.PHONY : Algorithms/LowestCost.cpp.obj
+
+Algorithms/LowestCost.i: Algorithms/LowestCost.cpp.i
+.PHONY : Algorithms/LowestCost.i
+
+# target to preprocess a source file
+Algorithms/LowestCost.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projekt_etap2.dir\build.make CMakeFiles/Projekt_etap2.dir/Algorithms/LowestCost.cpp.i
+.PHONY : Algorithms/LowestCost.cpp.i
+
+Algorithms/LowestCost.s: Algorithms/LowestCost.cpp.s
+.PHONY : Algorithms/LowestCost.s
+
+# target to generate assembly for a file
+Algorithms/LowestCost.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Projekt_etap2.dir\build.make CMakeFiles/Projekt_etap2.dir/Algorithms/LowestCost.cpp.s
+.PHONY : Algorithms/LowestCost.cpp.s
 
 Utils/ConfigFile.obj: Utils/ConfigFile.cpp.obj
 .PHONY : Utils/ConfigFile.obj
@@ -308,12 +308,12 @@ help:
 	@echo ... Algorithms/BFS.obj
 	@echo ... Algorithms/BFS.i
 	@echo ... Algorithms/BFS.s
-	@echo ... Algorithms/BranchAndBound.obj
-	@echo ... Algorithms/BranchAndBound.i
-	@echo ... Algorithms/BranchAndBound.s
 	@echo ... Algorithms/DFS.obj
 	@echo ... Algorithms/DFS.i
 	@echo ... Algorithms/DFS.s
+	@echo ... Algorithms/LowestCost.obj
+	@echo ... Algorithms/LowestCost.i
+	@echo ... Algorithms/LowestCost.s
 	@echo ... Utils/ConfigFile.obj
 	@echo ... Utils/ConfigFile.i
 	@echo ... Utils/ConfigFile.s

@@ -35,13 +35,13 @@ int BFS::bnb_bfs_run(int** costMatrix, int start) {
     // Tworzymy korzeń drzewa z bieżącego punktu startowego
     Node* root = new Node(size);
     root->path[0] = start;
-    root->depth = 1;
+    root->depth = 1; // Odwiedzono jedno miasto
     root->bound = lowerBound(root->path, costMatrix, size);
-    queue.enqueue(root);
+    queue.enqueue(root); //Dodajemy korzeń do kolejki.
 
     // Zmienna do przechowywania najlepszej znalezionej ścieżki
     bestPath = new int[size];
-    for (int i = 0; i < size; ++i) bestPath[i] = -1;
+    for (int i = 0; i < size; ++i) bestPath[i] = -1; //Wypełniamy ją wartościami -1 jako wartość początkowa.
     while (!queue.isQueueEmpty()) {
         Node* currentNode = queue.dequeue();
 
@@ -79,12 +79,12 @@ int BFS::bnb_bfs_run(int** costMatrix, int start) {
 
             // Tworzymy nowy węzeł potomny
             Node* childNode = new Node(*currentNode, size);
-            childNode->path[currentNode->depth] = i;
+            childNode->path[currentNode->depth] = i; //Dodajemy miasto i do ścieżki.
             childNode->depth = currentNode->depth + 1;
             childNode->cost = currentNode->cost + costMatrix[currentNode->path[currentNode->depth - 1]][i];
             childNode->bound = lowerBound(childNode->path, costMatrix, childNode->depth);
-            if (childNode->bound < minCost) queue.enqueue(childNode);
-            else delete childNode;
+            if (childNode->bound < minCost) queue.enqueue(childNode); // bierzemy kolejny z kolejki jesli obiecujacu
+            else delete childNode; // jesli nie usuwamy
         }
         delete currentNode;
     }

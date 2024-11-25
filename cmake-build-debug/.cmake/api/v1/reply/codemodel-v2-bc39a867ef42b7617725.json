@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/pitko/Desktop/Studia/PEA/Projekt_etap2/cmake-build-debug",
-		"source" : "C:/Users/pitko/Desktop/Studia/PEA/Projekt_etap2"
+		"build" : "C:/Users/damian pelc/Desktop/STUDIA/pew/projekt_e2/cmake-build-debug",
+		"source" : "C:/Users/damian pelc/Desktop/STUDIA/pew/projekt_e2"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 6
+		"minor" : 7
 	}
 }

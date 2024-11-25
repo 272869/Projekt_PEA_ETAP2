@@ -17,7 +17,7 @@ void Test::startTests() {
         long long sumTimeBFS = 0;
         long long sumTimeDFS = 0;
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 100; i++) {
             // Generowanie danych
             file_reader.loadRandomData(s, 99);
             int** matrix = file_reader.tab; // Wskaźnik na wygenerowaną macierz
@@ -41,9 +41,9 @@ void Test::startTests() {
         }
 
         // Obliczanie średnich czasów
-        double avgTimeLC = static_cast<double>(sumTimeLC) / 50.0;
-        double avgTimeBFS = static_cast<double>(sumTimeBFS) / 50.0;
-        double avgTimeDFS = static_cast<double>(sumTimeDFS) / 50.0;
+        double avgTimeLC = static_cast<double>(sumTimeLC) / 100.0;
+        double avgTimeBFS = static_cast<double>(sumTimeBFS) / 100.0;
+        double avgTimeDFS = static_cast<double>(sumTimeDFS) / 100.0;
 
         std::cout << "LC:   " << s << ", avg time: " << avgTimeLC << " [us]" << std::endl;
         std::cout << "BFS:   " << s << ", avg time: " << avgTimeBFS << " [us]" << std::endl;

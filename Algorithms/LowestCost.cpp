@@ -27,8 +27,8 @@ int LowestCost::lowerBound(int* currentPath, int** distances, int currentPathSiz
         if (rest[i] == 1 && currentPath[currentPathSize - 1] != i) continue; // jeżeli odwiedzone to pomijamy
         int min = INT_MAX; // Inicjalizujemy wartość minimalną.
         for (int j = 0; j < size; j++) {
-            if (rest[j] == 1 || i == j) continue;
-            if (distances[i][j] < min) min = distances[i][j];
+            if (rest[j] == 1 || i == j) continue; //Pomijamy wierzchołki już odwiedzone i do samego siebie.
+            if (distances[i][j] < min) min = distances[i][j]; // aktualizujemy min
         }
 
         // Uwzględniamy także koszt powrotu do punktu początkowego.
