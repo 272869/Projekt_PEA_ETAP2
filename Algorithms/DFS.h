@@ -23,8 +23,8 @@ public:
     ~DFS() {
         delete[] bestPath;
     }
-    void showTheShortestPath(int** costMatrix);
-    void showThePath(int start, int** costMatrix);
+    void showTheShortestPath();
+    void showThePath(int** costMatrix);
     int bnb_dfs_run(int** costMatrix, int start);
     int startFromEachVertex(int** costMatrix);
 };

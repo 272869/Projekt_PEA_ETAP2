@@ -2,12 +2,12 @@
 #define PROJEKT_ETAP2_NODE_H
 
 struct Node {
-    int* path;
-    int cost;
-    int depth;
-    int bound;
+    int* path; // dynamiczna tablica reprezentująca ścieżkę
+    int cost; // koszt bieżącej ścieżki
+    int depth; // głębokość w drzewie
+    int bound; // dolne ograniczenie
 
-    Node(int size) : cost(0), depth(0), bound(0) {
+    explicit Node(int size) : cost(0), depth(0), bound(0) {
         path = new int[size];
         for (int i = 0; i < size; i++) path[i] = -1;
     }

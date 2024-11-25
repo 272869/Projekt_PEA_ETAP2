@@ -3,7 +3,7 @@
 #include <fstream>
 #include "../Algorithms/BFS.h"
 #include "../Algorithms/DFS.h"
-#include "../Algorithms/BranchAndBound.h"
+#include "../Algorithms/LowestCost.h"
 
 void Test::startTests() {
     int size[] = {4, 5, 6, 7, 8, 9, 10}; // Rozmiary macierzy
@@ -89,15 +89,15 @@ void Test::typeOfDataMessage(std::string message) {
 // Obliczanie czasu wykonania algorytmu
 long long Test::calculateTime(int algorithm, int** matrix) {
     long long time;
-    BranchAndBound* bnb = nullptr;
+    LowestCost* lc = nullptr;
     BFS* bfs = nullptr;
     DFS* dfs = nullptr;
     switch (algorithm) {
         case 1: {  // Algorytm brute force
-            bnb = new BranchAndBound(file_reader.size);
+            lc = new LowestCost(file_reader.size);
             auto timeStart = std::chrono::high_resolution_clock::now();  // Start pomiaru czasu
-            //bnb->startFromEachVertex(matrix);
-            bnb->bnb_run(matrix,0);
+            lc->startFromEachVertex(matrix); //asym
+            //lc->bnb_lc_run(matrix,0); //sym
             auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
             time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();
             break;
@@ -105,8 +105,8 @@ long long Test::calculateTime(int algorithm, int** matrix) {
         case 2: {  // Algorytm najbliższego sąsiada (Nearest Neighbour)
             bfs = new BFS(file_reader.size);
             auto timeStart = std::chrono::high_resolution_clock::now();  // Start pomiaru czasu
-            //bfs->startFromEachVertex(matrix);
-            bfs->bnb_bfs_run(matrix,0);
+            bfs->startFromEachVertex(matrix); //asym
+            //bfs->bnb_bfs_run(matrix,0); //sym
             auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
             time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();
             break;
@@ -114,8 +114,8 @@ long long Test::calculateTime(int algorithm, int** matrix) {
         case 3: {
             dfs = new DFS(file_reader.size);
             auto timeStart = std::chrono::high_resolution_clock::now();  // Start pomiaru czasu
-            //dfs->startFromEachVertex(matrix);
-            dfs->bnb_dfs_run(matrix,0);
+            dfs->startFromEachVertex(matrix); //asym
+            //dfs->bnb_dfs_run(matrix,0); //sym
             auto timeEnd = std::chrono::high_resolution_clock::now();  // Koniec pomiaru czasu
             time = std::chrono::duration_cast<std::chrono::microseconds>(timeEnd - timeStart).count();
             break;

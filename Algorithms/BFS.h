@@ -1,5 +1,6 @@
 #include <cstring>
 #include <climits>
+#include "../Utils/Node.h"
 
 class BFS {
 private:
@@ -11,6 +12,7 @@ private:
     int calculateCost(int* path, int** costMatrix, int pathSize);
     int lowerBound(int* currentPath, int** distances, int currentPathSize);
 
+
 public:
     BFS(int n) : size(n), minCost(INT_MAX) {
         allVertexMinCost = INT_MAX;
@@ -19,8 +21,8 @@ public:
     ~BFS() {
         delete[] bestPath;
     }
-    void showTheShortestPath(int** costMatrix);
-    void showThePath(int start, int** costMatrix);
+    void showTheShortestPath();
+    void showThePath(int** costMatrix);
     int startFromEachVertex(int** costMatrix);
     int bnb_bfs_run(int** costMatrix, int start);
 };

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "../Utils/Node.h"
 
-class BranchAndBound {
+class LowestCost {
 public:
     int size = 0;
     int minCost = INT_MAX;
@@ -10,21 +10,23 @@ public:
     int* rest = NULL;
     int allVertexMinCost;
     int *allVertexBestPath;
-    BranchAndBound(int n) {
+
+    LowestCost(int n) {
         this->size = n;
         rest = new int[n];
         allVertexMinCost = INT_MAX;
         allVertexBestPath = nullptr;
     }
-    ~BranchAndBound() {
+    ~LowestCost() {
         delete[] rest;
         delete[] bestPath;
     }
+
     int lowerBound(int* currentPath, int** distances, int currentPathSize);
-    int bnb_run(int** routes, int start);
-    void showTheShortestPath(int** costMatrix);
-    void showThePath(int start, int** costMatrix);
+    int bnb_lc_run(int** routes, int start);
+    void showTheShortestPath();
+    void showThePath(int** costMatrix);
     int startFromEachVertex(int** routes);
-    void bnb(int* path, int start, int& minCost, int* bestPath, int** costMatrix, int size);
+    void bnb_lc(Node* currentNode, int** costMatrix);
     int calculateCost(int* path, int** costMatrix, int size);
 };

@@ -3,6 +3,7 @@
 #include "FileReader.h"
 #include <iomanip>
 
+//funkcja wczytywania z pliku
 int** FileReader::loadFromFile(std::string path) {
     std::ifstream file(path);
     if (!file.good()) {
@@ -22,7 +23,7 @@ int** FileReader::loadFromFile(std::string path) {
     return tab;
 }
 
-// Funkcja alokujaca pamiec dla tablicy o rozmiarze NxN
+//funkcja alokujaca pamiec dla tablicy o rozmiarze NxN
 void FileReader::alocate(int N) {
     this->size = N; // przypisanie rozmiaru tablicy
     tab = new int* [N];
@@ -35,13 +36,13 @@ void FileReader::showTab() {
     if (tab != NULL) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (tab[i][j] != -1) std::cout << std::setw(3) << tab[i][j] << " ";
-                else std::cout << "   " << " ";
+                std::cout << std::setw(3) << tab[i][j] << " ";
             }
             std::cout << std::endl;
         }
     }
 }
+
 
 
 // Funkcja generujaca losowe dane do tablicy NxN z wartosciami od 1 do sand
@@ -89,15 +90,17 @@ void FileReader::ordertable(int randtab[], int number) {
 }
 
 void FileReader::randomshuttle(int randtab[], int number, int testnumber, int lpoj) {
-    if (number == 0)return;
-    srand((lpoj * 100 + testnumber) * 845);
-    srand(time(NULL) + (lpoj * 51));
+    if (number == 0) return;
+
+    // Ustawienie ziarna generatora liczb losowych na podstawie czasu
+    srand(time(NULL) + lpoj);
 
     for (int i = 0; i < number; i++) {
+        // Losowanie dwóch indeksów
         int randomplace1 = rand() % number;
-        randomplace1 = randomplace1 * rand() % number;
         int randomplace2 = rand() % number;
-        randomplace2 = randomplace2 * rand() % number;
+
+        // Zamiana elementów
         int swap = randtab[randomplace1];
         randtab[randomplace1] = randtab[randomplace2];
         randtab[randomplace2] = swap;

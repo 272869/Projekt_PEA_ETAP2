@@ -1,6 +1,10 @@
 #include "Utils/ConfigFile.h"
 
 int main(){
-    ConfigFile configHandler("C:\\Users\\pitko\\Desktop\\Studia\\PEA\\Projekt_etap2\\cmake-build-debug\\config.txt");
+    ConfigFile configHandler("config.txt");
     configHandler.parseConfig();
+
+    std::cout << std::endl << "Wcisnij ENTER aby zakonczyc program";
+    std::cin.get();
+    return 0;
 }
