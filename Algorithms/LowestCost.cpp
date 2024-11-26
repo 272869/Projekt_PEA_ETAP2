@@ -45,7 +45,8 @@ void LowestCost::bnb_lc(Node* currentNode, int** costMatrix) {
         int currentCost = calculateCost(currentNode->path, costMatrix, size);
         if (currentCost < minCost) {
             minCost = currentCost;
-            for (int i = 0; i < size; ++i) bestPath[i] = currentNode->path[i];
+            //for (int i = 0; i < size; ++i) bestPath[i] = currentNode->path[i];
+            bestPath = currentNode->path;
         }
         delete currentNode; // Usuwamy węzeł po przetworzeniu
         return;

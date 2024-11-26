@@ -1,7 +1,3 @@
-//
-// Created by damian pelc on 19.11.2024.
-//
-
 #ifndef TEST_H
 #define TEST_H
 #include "FileReader.h"
@@ -13,6 +9,7 @@ public:
 
 private:
     FileReader file_reader;
+    FileReader file_readerSYM;
     long long calculateTime(int algorithm, int** tab);
     static void saveToCsvFile(std::string fileName, long long time , int size);
     static void saveToCsvFile(std::string fileName, std::string message);

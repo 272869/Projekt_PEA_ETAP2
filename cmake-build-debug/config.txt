@@ -1,9 +1,10 @@
-mode: test  #generate tryb pomiarowy, test tryb testowy
-#ustawienia trybu testowego
-data: file #file - z pliku, random - wylosowany
-fileName: matrix6.atsp #scieżka do pliku jesli tryb z pliku
-matrixType: a #rodzaj macierzy a - asymetryczna , s -asymetryczna
-size: 8 #rozmiar losowanej macierzy
-show: yes #yes - pokaz macierz, no- nie pokazuj macierzy
-algorithm: LC #DFS,BFS lub LC
+mode: generate                  #generate tryb pomiarowy, test tryb testowy
+                                #ustawienia trybu testowego
+data: random                    #file - z pliku, random - wylosowany
+fileName: matrix6.atsp          #scieżka do pliku jesli tryb z pliku
+matrixType: s                   #rodzaj macierzy a - asymetryczna , s -asymetryczna
+size: 7                         #rozmiar losowanej macierzy
+show: yes                       #yes - pokaz macierz, no- nie pokazuj macierzy
+algorithm: LC                   #DFS,BFS lub LC
+
 

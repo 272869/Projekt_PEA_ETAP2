@@ -45,7 +45,7 @@ void ConfigFile::parseConfig() {
 }
 
 void ConfigFile::handleGenerateMode() {
-    std::cout << "Tryb generowania danych...\n";
+    std::cout << "Tryb generowania danych\n";
     test.startTests();
 }
 
